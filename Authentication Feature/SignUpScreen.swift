@@ -37,7 +37,7 @@ struct  SignUpScreen: View {
                 .cornerRadius(6)
                 .overlay(RoundedRectangle(cornerRadius: 6)
                     .stroke(nameError.isEmpty ? Color.blue: Color.red, lineWidth: 1 ))
-                
+                .onChange(of: name) { _ in validateName() }
                 
                 if !nameError.isEmpty {
                     Text(nameError)
@@ -54,6 +54,7 @@ struct  SignUpScreen: View {
                 .background(Color(.systemGray6))
                 .cornerRadius(6)
                 .overlay(RoundedRectangle(cornerRadius: 6) .stroke(emailError.isEmpty ? Color.blue :  Color.red, lineWidth: 1 ) )
+                .onChange(of: email) { _ in validateEmail() }
                 
                 if !emailError.isEmpty {
                     Text(emailError)
@@ -69,6 +70,7 @@ struct  SignUpScreen: View {
                 .background(Color(.systemGray6))
                 .cornerRadius(6)
                 .overlay(RoundedRectangle(cornerRadius: 6) .stroke(passwordError.isEmpty ? Color.blue : Color.red, lineWidth: 1 ) )
+                .onChange(of: password) { _ in validatePassword() }
                 
                 if !passwordError.isEmpty {
                     Text(passwordError)
@@ -84,6 +86,7 @@ struct  SignUpScreen: View {
                 .background(Color(.systemGray6))
                 .cornerRadius(6)
                 .overlay(RoundedRectangle(cornerRadius: 6) .stroke(confirmPasswordError.isEmpty ? Color.blue : Color.red ,lineWidth: 1 ) )
+                .onChange(of: confirmPassword) { _ in validateConfirmPassword() }
                 
                 if !confirmPasswordError.isEmpty {
                     Text(confirmPasswordError)
@@ -118,32 +121,51 @@ struct  SignUpScreen: View {
         
     }
     
-    func validateFields(){
-        nameError = ""
-        emailError = ""
-        passwordError = ""
-        confirmPasswordError = ""
-        
-        if nameError.isEmpty {
+    func validateName() {
+        if name.isEmpty {
             nameError = "Enter your name"
+        }else{
+            nameError = ""
         }
-        
-        if emailError.isEmpty || !email.contains("@") {
+    }
+    
+    func validateEmail() {
+        if email.isEmpty || !email.contains("@") {
             emailError = "Enter a valid email"
+        } else {
+            emailError = ""
         }
-        
+    }
+    
+    func validatePassword(){
         if password.count < 6 {
             passwordError = "Password must be at least 6 characters"
+        }else{
+            passwordError = ""
         }
-        
-        if confirmPasswordError != password {
+    }
+    
+    func validateConfirmPassword() {
+        if confirmPassword != password {
             confirmPasswordError = "Password do not match"
+        }else {
+            confirmPasswordError = ""
         }
+    }
+    
+    func validateFields() {
+        validateName()
+        validateEmail()
+        validatePassword()
+        validateConfirmPassword()
         
         if nameError.isEmpty && emailError.isEmpty && passwordError.isEmpty && confirmPasswordError.isEmpty {
             navigate = true
         }
     }
+    
+    
+    
 }
 
 
