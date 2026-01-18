@@ -5,25 +5,17 @@
 //  Created by Nadira Seitkazy  on 14.01.2026.
 //
 
-//
-//  SplashScreen.swift
-//  Authentication Feature
-//
-//  Created by Nadira Seitkazy  on 14.01.2026.
-//
-
 import SwiftUI
 
 struct HomeScreen: View {
-    
+    @Binding var path: [AppRoute]
     
     var body: some View {
-        
-        Text("Home Screen")
+        Text(Strings.homeTitle)
     }
     
 }
 
 #Preview {
-    HomeScreen()
+    HomeScreen(path: .constant([.home]))
 }
