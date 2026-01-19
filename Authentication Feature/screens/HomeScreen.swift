@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeScreen: View {
-    @Binding var path: [AppRoute]
+    @Binding var path: NavigationPath 
     
     var body: some View {
         Text(Strings.homeTitle)
@@ -17,5 +17,5 @@ struct HomeScreen: View {
 }
 
 #Preview {
-    HomeScreen(path: .constant([.home]))
+    RootView()
 }

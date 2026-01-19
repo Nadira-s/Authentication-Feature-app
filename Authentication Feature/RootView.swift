@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct RootView: View {
-    @State private var path: [AppRoute] = []
+    @State private var path = NavigationPath()
     @State private var showSplash = true
     
     var body: some View {
@@ -32,4 +32,3 @@ struct RootView: View {
         }
     }
 }
-

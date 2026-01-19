@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct  SignUpScreen: View {
-    @Binding var path: [AppRoute]
+    @Binding var path: NavigationPath 
     @State private var name = Strings.nul
     @State private var email = Strings.nul
     @State private var password = Strings.nul
@@ -81,7 +81,7 @@ struct  SignUpScreen: View {
                     let confirmValid = !confirmPassword.isEmpty && confirmPassword == password
                     
                     if usernameValid && emailValid && passwordValid && confirmValid {
-                        path.append(.home)
+                        path.append(AppRoute.home)
                     } else {
                         print(Strings.Validation.validationFailed)
                     }
@@ -91,7 +91,7 @@ struct  SignUpScreen: View {
                         .foregroundColor(.gray)
                     
                     Button(Strings.Login.title) {
-                        path.append(.login)
+                        path.append(AppRoute.login)
                     }
                     .foregroundColor(.blue)
                     .bold()
