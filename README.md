@@ -25,6 +25,15 @@ This project includes UI, navigation, and validation logic for Splash, Login, an
 
 ## 🖼 Screens
 
+**Screenshots:**
+
+<p float="left">
+  <img src="Screenshots/splash.png" width="250" />
+  <img src="Screenshots/login.png" width="250" />
+  <img src="Screenshots/signup.png" width="250" />
+</p>
+
+
 ### 1️⃣ Splash Screen
 
 **Description:**
@@ -32,14 +41,6 @@ This project includes UI, navigation, and validation logic for Splash, Login, an
 - Progress indicator below logo (~30px spacing)
 - 3-second timer on load
 - Automatic navigation to Login Screen after 3 seconds
-
-**Screenshot:**
-
-<p float="left">
-  <img src="Screenshots/splash.png" width="250" />
-  <img src="Screenshots/login.png" width="250" />
-  <img src="Screenshots/signup.png" width="250" />
-</p>
 
 ---
 
@@ -55,10 +56,6 @@ This project includes UI, navigation, and validation logic for Splash, Login, an
 
 **Navigation:**
 - Tap **Sign Up** → Navigate to Sign Up Screen
-
-**Screenshot:**
-
-![Login Screen](Screenshots/login.png)
 
 ---
 
@@ -81,10 +78,6 @@ This project includes UI, navigation, and validation logic for Splash, Login, an
 **Navigation:**
 - If validation passes → Navigate to Home Screen
 - Tap **Login** → Navigate back to Login Screen
-
-**Screenshot:**
-
-![Sign Up Screen](Screenshots/signup.png)
 
 ---
 
