@@ -35,7 +35,11 @@ This project includes UI, navigation, and validation logic for Splash, Login, an
 
 **Screenshot:**
 
-![Splash Screen](Screenshots/splash.png)
+<p float="left">
+  <img src="Screenshots/splash.png" width="250" />
+  <img src="Screenshots/login.png" width="250" />
+  <img src="Screenshots/signup.png" width="250" />
+</p>
 
 ---
 
