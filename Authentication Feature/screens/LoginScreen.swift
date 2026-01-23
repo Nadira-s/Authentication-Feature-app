@@ -9,8 +9,8 @@ import SwiftUI
 
 struct LoginScreen: View {
     @Binding var path: NavigationPath 
-    @State private var email = Strings.nul
-    @State private var password = Strings.nul
+    @State private var email: String? = nil
+    @State private var password: String? = nil
     
     var body: some View {
         VStack(spacing: 20) {
@@ -18,11 +18,14 @@ struct LoginScreen: View {
                 .font(.largeTitle)
                 .bold()
                 .foregroundColor(.blue)
-                .padding()
+//                .padding()
 
             SimpleTextField(
                 label: Strings.Login.email,
-                text: $email,
+                text: Binding(
+                       get: { email ?? "" },
+                       set: { email = $0 }
+                   ),
                 placeholder: Strings.placeholder.emailLabel,
                 validator: { text in
                     if text.isEmpty { return Strings.required }
@@ -32,7 +35,10 @@ struct LoginScreen: View {
             )
             
             SecurePasswordView(
-                password: $password,
+                password: Binding(
+                    get: { password ?? ""},
+                    set: { password = $0 }
+                ),
                 validator: { text in
                     if text.isEmpty { return Strings.required }
                     if text.count < 6 { return Strings.Validation.passwordError }
@@ -41,10 +47,21 @@ struct LoginScreen: View {
             )
             
             PrimaryButton(title: Strings.Login.title) {
-                let usernameValid = !email.isEmpty && email.count >= 3
-                let passwordValid = !password.isEmpty && password.count >= 6
+                let emailValid = {
+                    if let email = email {
+                        return isValidEmail(email)
+                    }
+                    return false
+                }()
                 
-                if usernameValid && passwordValid {
+                let passwordValid = {
+                    if let password = password {
+                        return !password.isEmpty && password.count >= 6
+                    }
+                    return false
+                }()
+                
+                if emailValid && passwordValid {
                     path.append(AppRoute.home)
                 } else {
                     print(Strings.Validation.validationFailed)
@@ -66,7 +83,10 @@ struct LoginScreen: View {
     }
 }
 
-
+func isValidEmail(_ email: String) -> Bool {
+    let pattern = #"^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"#
+    return NSPredicate(format: "SELF MATCHES %@", pattern).evaluate(with: email)
+}
 
 #Preview {
     RootView()

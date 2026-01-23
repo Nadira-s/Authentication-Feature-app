@@ -8,15 +8,15 @@ import SwiftUI
 
 struct  SignUpScreen: View {
     @Binding var path: NavigationPath 
-    @State private var name = Strings.nul
-    @State private var email = Strings.nul
-    @State private var password = Strings.nul
-    @State private var confirmPassword = Strings.nul
+    @State private var name: String? = nil
+    @State private var email: String? = nil
+    @State private var password: String? = nil
+    @State private var confirmPassword: String? = nil
     
-    @State private var nameError = Strings.nul
-    @State private var emailError = Strings.nul
-    @State private var passwordError = Strings.nul
-    @State private var confirmPasswordError = Strings.nul
+    @State private var nameError: String? = nil
+    @State private var emailError: String? = nil
+    @State private var passwordError: String? = nil
+    @State private var confirmPasswordError: String? = nil
     
     @State private var navigate = false
     
@@ -31,7 +31,10 @@ struct  SignUpScreen: View {
                 
                 SimpleTextField(
                     label: Strings.SignUp.name,
-                    text: $name,
+                    text: Binding(
+                        get: {name ?? "" },
+                        set: {name = $0}
+                    ),
                     placeholder: Strings.placeholder.nameLabel,
                     validator: { text in
                         if text.isEmpty { return Strings.required }
@@ -43,7 +46,10 @@ struct  SignUpScreen: View {
                 
                 SimpleTextField(
                     label: Strings.SignUp.email,
-                    text: $email,
+                    text: Binding(
+                        get: {email ?? "" },
+                        set: {email = $0}
+                    ),
                     placeholder: Strings.placeholder.emailLabel,
                     validator: { text in
                         if text.isEmpty { return Strings.required }
@@ -54,7 +60,10 @@ struct  SignUpScreen: View {
                 
                 SecurePasswordView(
                     label: Strings.SignUp.confirm,
-                    password: $password,
+                    password: Binding(
+                        get: {password ?? "" },
+                        set: {password = $0}
+                    ),
                     placeholder:Strings.placeholder.passwordLabel ,
                     validator: { text in
                         if text.isEmpty { return Strings.Validation.password
@@ -65,7 +74,10 @@ struct  SignUpScreen: View {
                 )
                 SecurePasswordView(
                     label: Strings.SignUp.confirm,
-                    password: $confirmPassword,
+                    password: Binding(
+                        get: {confirmPassword ?? "" },
+                        set: {confirmPassword = $0}
+                    ),
                     placeholder:Strings.placeholder.confirmLabel ,
                     validator: { text in
                         if text.isEmpty { return Strings.Validation.confirm}
@@ -75,10 +87,32 @@ struct  SignUpScreen: View {
                 )
                 
                 PrimaryButton(title: Strings.Login.title) {
-                    let usernameValid = !email.isEmpty && email.count >= 3
-                    let passwordValid = !password.isEmpty && password.count >= 6
-                    let emailValid = !email.isEmpty && email.contains(Strings.emailContain)
-                    let confirmValid = !confirmPassword.isEmpty && confirmPassword == password
+                    let usernameValid = {
+                        if let name = name {
+                            return !name.isEmpty && name.count >= 3
+                        }
+                        return false
+                    }()
+                    let emailValid = {
+                        if let email = email {
+                            return isValidEmail(email)
+                        }
+                        return false
+                    }()
+                    
+                    let passwordValid = {
+                        if let password = password {
+                            return !password.isEmpty && password.count >= 6
+                        }
+                        return false
+                    }()
+                    
+                    let confirmValid = {
+                        if let confirm = confirmPassword, let pass = password {
+                            return !confirm.isEmpty && confirm == pass
+                        }
+                        return false
+                    }()
                     
                     if usernameValid && emailValid && passwordValid && confirmValid {
                         path.append(AppRoute.home)
